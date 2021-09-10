@@ -54,7 +54,7 @@ const Header = (props) => {
             >
               <span style={styles.rightSpacing}>Schemas</span>
               <span className='badge bg-primary rounded-pill'>
-                {props.schema?.count || 0}
+                {props.schemas?.count || 0}
               </span>
             </a>
           </li>

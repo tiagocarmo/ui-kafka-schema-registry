@@ -3,27 +3,36 @@ import axios from 'axios';
 import Header from '../components/Header';
 import FormNewTopic from '../components/FormNewTopic';
 import ListTopics from '../components/ListTopics';
+import FormNewSchema from '../components/FormNewSchema';
+import ListSchemas from '../components/ListSchemas';
 
 const Index = () => {
-  const [props, setProps] = useState({
-    topics: {
-      list: [],
-      count: 0
-    }
+  const [topics, setTopics] = useState({
+    list: [],
+    count: 0
+  });
+  const [schemas, setSchemas] = useState({
+    list: [],
+    count: 0
   });
   const [page, setpage] = useState({
     topics: false,
     schema: false
   });
 
-  const handleUpdateProps = async () => {
+  const handleUpdateTopic = async () => {
     const list = await axios.get('http://localhost:3000/api/kafka-list-topics');
-    setProps({
-      ...props,
-      topics: {
-        list: list.data,
-        count: list.data.length
-      }
+    setTopics({
+      list: list.data,
+      count: list.data.length
+    });
+  };
+
+  const handleUpdateSchema = async () => {
+    const list = await axios.get('http://localhost:3000/api/schema-registry-list');
+    setSchemas({
+      list: list.data,
+      count: list.data.length
     });
   };
 
@@ -49,13 +58,15 @@ const Index = () => {
   };
 
   useEffect(() => {
-    handleUpdateProps();
+    handleUpdateTopic();
+    handleUpdateSchema();
   }, []);
 
   return (
     <>
       <Header
-        {...props}
+        topics={topics}
+        schemas={schemas}
         onCallbackShowTopics={handleShowTopics}
         onCallbackShowSchema={handleShowSchema}
         onCallbackHideAll={handleHideAll}
@@ -66,12 +77,12 @@ const Index = () => {
             <div className='row'>
               <div className='col-sm'>
                 <ListTopics
-                  topics={props.topics}
-                  onCallbackUpdateProps={handleUpdateProps}
+                  topics={topics}
+                  onCallbackUpdateProps={handleUpdateTopic}
                 />
               </div>
               <div className='col-sm'>
-                <FormNewTopic onCallbackUpdateProps={handleUpdateProps} />
+                <FormNewTopic onCallbackUpdateProps={handleUpdateTopic} />
               </div>
             </div>
           </div>
@@ -79,7 +90,20 @@ const Index = () => {
       )}
       {page.schema && (
         <>
-          <p>Mostra componentes relacionados ao Schema Registry.</p>
+          <div className='container'>
+            <div className='row'>
+              <div className='col-sm'>
+                <ListSchemas
+                  schemas={schemas}
+                />
+              </div>
+              <div className='col-sm'>
+                <FormNewSchema
+                  onCallbackUpdateProps={handleUpdateSchema}
+                />
+              </div>
+            </div>
+          </div>
         </>
       )}
     </>
