@@ -6,7 +6,6 @@ const handler = async (req, res) => {
   await admin.connect();
 
   const listTopics = await admin.listTopics();
-  console.log(req.body.name);
 
   if (listTopics.includes(req?.body?.name) && req?.body?.name) {
     await admin.deleteTopics({

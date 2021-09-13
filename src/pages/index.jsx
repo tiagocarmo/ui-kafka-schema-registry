@@ -95,12 +95,29 @@ const Index = () => {
               <div className='col-sm'>
                 <ListSchemas
                   schemas={schemas}
+                  onCallbackUpdateProps={handleUpdateSchema}
                 />
               </div>
               <div className='col-sm'>
                 <FormNewSchema
                   onCallbackUpdateProps={handleUpdateSchema}
                 />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+      {(!page.topics && !page.schema) && (
+        <>
+          <div className='container'>
+            <div className='row'>
+              <div className='col-sm'>
+                <FormNewSchema
+                  onCallbackUpdateProps={handleUpdateSchema}
+                />
+              </div>
+              <div className='col-sm'>
+                <FormNewTopic onCallbackUpdateProps={handleUpdateTopic} />
               </div>
             </div>
           </div>

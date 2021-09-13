@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import IconSvgView from '../components/IconSvgView';
+import IconSvgTrash from '../components/IconSvgTrash';
 import PreviewSchema from '../components/PreviewSchema';
 import axios from 'axios';
 
@@ -21,7 +22,6 @@ const ListSchemas = (props) => {
     schemaType: 'JSON',
     schema: ''
   });
-  console.log('schema', schema);
 
   const getSchema = async (name) => {
     if (name !== schema.subject) {
@@ -35,10 +35,26 @@ const ListSchemas = (props) => {
         );
         setSchema(getSchemaInfo.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
       setLoading(false);
     }
+  };
+
+  const deleteSchema = async (item) => {
+    setLoading(true);
+    try {
+      await axios.post(
+        'http://localhost:3000/api/schema-registry-delete',
+        {
+          subject: item
+        }
+      );
+      props.onCallbackUpdateProps();
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -74,6 +90,14 @@ const ListSchemas = (props) => {
                   style={styles.rightSpacing}
                 >
                   <IconSvgView />
+                </button>
+                <button
+                  type='button'
+                  className='btn btn-danger'
+                  onClick={() => deleteSchema(item)}
+                  disabled={loading ? 'disabled' : ''}
+                >
+                  <IconSvgTrash />
                 </button>
               </div>
             </li>
