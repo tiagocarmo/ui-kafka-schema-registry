@@ -9,18 +9,23 @@ const styles = {
 
 const FormNewSchema = (props) => {
   const [loading, setLoading] = useState(false);
+  const [createdSR, setCreatedSR] = useState({});
 
   const createTopic = async (event) => {
     event.preventDefault();
     setLoading(true);
     try {
-      await axios.post(
+      const createRegistry = await axios.post(
         'http://localhost:3000/api/schema-registry-create',
         {
           subject: event.target.inputSchemaSubject.value,
           value: event.target.inputSchemaValue.value
         }
       );
+      setCreatedSR(createRegistry.data);
+      setTimeout(() => {
+        setCreatedSR({});
+      }, 3000);
       props.onCallbackUpdateProps();
     } catch (error) {
       console.log(error);
@@ -32,13 +37,15 @@ const FormNewSchema = (props) => {
     <div className='my-3 p-3 bg-body rounded shadow-sm' style={styles.bottomSpacing}>
       <form onSubmit={createTopic}>
         <legend>Edição/Criação de Novo Schema</legend>
-        <div
-          className='alert alert-warning alert-dismissible fade show'
-          role='alert'
-        >
-          <strong>Uhuuu!</strong> Schema criado!
-          <br />Id: 300
-        </div>
+        {createdSR.id && (
+          <div
+            className='alert alert-warning alert-dismissible fade show'
+            role='alert'
+          >
+            <strong>Uhuuu!</strong> Schema criado!
+            <br />Id: <strong>{createdSR.id}</strong>
+          </div>
+        )}
         <div className='form-group' style={styles.bottomSpacing}>
           <label htmlFor='inputSchemaSubject'>Insira o subject (nome) do schema</label>
           <input
@@ -78,8 +85,8 @@ const FormNewSchema = (props) => {
         >
           Editar/Criar novo schema
         </button>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 };
 

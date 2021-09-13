@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import IconSvgView from '../components/IconSvgView';
 import PreviewSchema from '../components/PreviewSchema';
 import axios from 'axios';
@@ -41,6 +41,16 @@ const ListSchemas = (props) => {
     }
   };
 
+  useEffect(() => {
+    setSchema({
+      subject: '',
+      version: 0,
+      id: 0,
+      schemaType: 'JSON',
+      schema: ''
+    });
+  }, [props.schemas]);
+
   return (
     <div className='my-3 p-3 bg-body rounded shadow-sm' style={styles.bottomSpacing}>
       <legend>Lista de Schemas</legend>
@@ -71,7 +81,7 @@ const ListSchemas = (props) => {
         })}
         {!props.schemas?.count && <li className='list-group-item'>Nenhum schema cadastrado</li>}
       </ul>
-      {!loading && schema.id !== 0 && <PreviewSchema schema={schema} /> }
+      {!loading && schema.id !== 0 && <PreviewSchema schema={schema} />}
     </div>
   );
 };

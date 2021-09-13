@@ -9,6 +9,7 @@ const styles = {
 
 const FormNewTopic = (props) => {
   const [loading, setLoading] = useState(false);
+  const [createdT, setCreatedT] = useState(false);
 
   const createTopic = async (event) => {
     event.preventDefault();
@@ -20,6 +21,10 @@ const FormNewTopic = (props) => {
           name: event.target.inputTopicName.value
         }
       );
+      setCreatedT(true);
+      setTimeout(() => {
+        setCreatedT(false);
+      }, 3000);
       props.onCallbackUpdateProps();
     } catch (error) {
       console.log(error);
@@ -31,6 +36,14 @@ const FormNewTopic = (props) => {
     <div className='my-3 p-3 bg-body rounded shadow-sm' style={styles.bottomSpacing}>
       <form onSubmit={createTopic}>
         <legend>Criação de Novo Tópico</legend>
+        {createdT && (
+          <div
+            className='alert alert-warning alert-dismissible fade show'
+            role='alert'
+          >
+            <strong>Uhuuu!</strong> Tópico criado!
+          </div>
+        )}
         <div className='form-group' style={styles.bottomSpacing}>
           <label htmlFor='inputTopicName'>Insira o nome do tópico</label>
           <input
