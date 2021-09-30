@@ -64,7 +64,7 @@ const FormNewSchema = (props) => {
           </small>
         </div>
         <div className='form-group' style={styles.bottomSpacing}>
-          <label htmlFor='inputSchemaValue'>Insira o nome do tópico</label>
+          <label htmlFor='inputSchemaValue'>Insira o JSON-SCHEMA</label>
           <textarea
             className='form-control'
             id='inputSchemaValue'

@@ -10,7 +10,10 @@ const handler = async (req, res) => {
   // remove topicos reservados, iniciados com _
   const newObject = [];
   listTopics.forEach((value) => {
-    if (!value.includes('__confluent') && !value.includes('_schemas')) {
+    if (!value.includes('__confluent')
+      && !value.includes('_schemas')
+      && !value.includes('__consumer')
+    ) {
       newObject.push(value);
     }
   });

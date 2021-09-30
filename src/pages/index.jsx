@@ -19,21 +19,34 @@ const Index = () => {
     topics: false,
     schema: false
   });
+  const [reloadRequired, setReloadRequired] = useState(false);
 
   const handleUpdateTopic = async () => {
-    const list = await axios.get('http://localhost:3000/api/kafka-list-topics');
-    setTopics({
-      list: list.data,
-      count: list.data.length
-    });
+    try {
+      const list = await axios.get('http://localhost:3000/api/kafka-list-topics');
+      setTopics({
+        list: list.data,
+        count: list.data.length
+      });
+    } catch (e) {
+      setReloadRequired(true);
+      console.error(e);
+      console.error('Não foi possível obter os tópicos do Kafka');
+    }
   };
 
   const handleUpdateSchema = async () => {
-    const list = await axios.get('http://localhost:3000/api/schema-registry-list');
-    setSchemas({
-      list: list.data,
-      count: list.data.length
-    });
+    try {
+      const list = await axios.get('http://localhost:3000/api/schema-registry-list');
+      setSchemas({
+        list: list.data,
+        count: list.data.length
+      });
+    } catch (e) {
+      setReloadRequired(true);
+      console.error(e);
+      console.error('Não foi possível obter os schemas');
+    }
   };
 
   const handleShowTopics = () => {
@@ -71,7 +84,23 @@ const Index = () => {
         onCallbackShowSchema={handleShowSchema}
         onCallbackHideAll={handleHideAll}
       />
-      {page.topics && (
+      {reloadRequired && (
+        <div className='container'>
+          <div className='row'>
+            <p>Hey! Verifique se o <strong>zookeeper</strong>, <strong>kafka</strong> e <strong>schema-registry</strong> estão rodando.</p>
+            <p>Você pode verificar usando o comando:</p>
+            <pre>
+              <code>sudo docker start zookeeper kafka schema-registry</code>
+            </pre>
+            <p>Caso um deles não esteja iniciado, você pode rodar eles com o comando:</p>
+            <pre>
+              <code>sudo docker start NOME_DO_SERVICO</code>
+            </pre>
+            <p>Se não tiverem instalado, leia o README.md e siga as instruções!</p>
+          </div>
+        </div>
+      )}
+      {!reloadRequired && page.topics && (
         <>
           <div className='container'>
             <div className='row'>
@@ -88,7 +117,7 @@ const Index = () => {
           </div>
         </>
       )}
-      {page.schema && (
+      {!reloadRequired && page.schema && (
         <>
           <div className='container'>
             <div className='row'>
@@ -107,7 +136,7 @@ const Index = () => {
           </div>
         </>
       )}
-      {(!page.topics && !page.schema) && (
+      {!reloadRequired && (!page.topics && !page.schema) && (
         <>
           <div className='container'>
             <div className='row'>
