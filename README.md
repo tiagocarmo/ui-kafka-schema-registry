@@ -3,12 +3,13 @@
 Ter o Zookeeper, Kafka e Schema-Registry rodando na sua maquina. Caso já estejam instalados (containers do docker), podem ser iniciados com os seguintes comandos:
 
 ```sh
-sudo docker start zookeeper kafka schema-registry
+sh ./startup.sh
 ```
 
 IMPORTANTE:
 
-Algumas vezes o schema-registry não inicia ou demora iniciar. Verifique com o comando:
+Este comando vai iniciar 1 por 1 os containers, a cada 40 segundos (tempo médio de start entre eles, depende da sua maquina).
+Algumas vezes o schema-registry não inicia ou demora iniciar. Verifique com o comando (já acontece no startup.sh):
 
 ```sh
 sudo docker ps
