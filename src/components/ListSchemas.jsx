@@ -5,8 +5,27 @@ import PreviewSchema from '../components/PreviewSchema';
 import axios from 'axios';
 
 const styles = {
+  listGroup: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    flexWrap: 'wrap',
+    alignContent: 'center',
+    gap: '10px'
+  },
+  listItem: {
+    width: '100%'
+  },
   bottomSpacing: {
     paddingBottom: '40px'
+  },
+  action: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '120px',
+    marginLeft: '10px',
+    textAlign: 'right'
   },
   rightSpacing: {
     marginRight: '10px'
@@ -28,7 +47,7 @@ const ListSchemas = (props) => {
       setLoading(true);
       try {
         const getSchemaInfo = await axios.post(
-          'http://localhost:3000/api/schema-registry-item',
+          'http://localhost:4000/api/schema-registry-item',
           {
             name
           }
@@ -45,7 +64,7 @@ const ListSchemas = (props) => {
     setLoading(true);
     try {
       await axios.post(
-        'http://localhost:3000/api/schema-registry-delete',
+        'http://localhost:4000/api/schema-registry-delete',
         {
           subject: item
         }
@@ -70,15 +89,16 @@ const ListSchemas = (props) => {
   return (
     <div className='my-3 p-3 bg-body rounded shadow-sm' style={styles.bottomSpacing}>
       <legend>Lista de Schemas</legend>
-      <ul className='list-group' style={styles.bottomSpacing}>
+      <ul className='list-group' style={{...styles.bottomSpacing, ...styles.listGroup}}>
         {props.schemas?.list.map((item, key) => {
           return (
             <li
               key={key}
               className='list-group-item d-flex justify-content-between'
+              style={styles.listItem}
             >
               <span>{item}</span>
-              <div>
+              <div style={styles.action}>
                 <button
                   type='button'
                   className='btn btn-primary'

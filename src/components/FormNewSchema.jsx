@@ -16,7 +16,7 @@ const FormNewSchema = (props) => {
     setLoading(true);
     try {
       const createRegistry = await axios.post(
-        'http://localhost:3000/api/schema-registry-create',
+        'http://localhost:4000/api/schema-registry-create',
         {
           subject: event.target.inputSchemaSubject.value,
           value: event.target.inputSchemaValue.value
@@ -25,7 +25,7 @@ const FormNewSchema = (props) => {
       setCreatedSR(createRegistry.data);
       setTimeout(() => {
         setCreatedSR({});
-      }, 3000);
+      }, 5000);
       props.onCallbackUpdateProps();
     } catch (error) {
       console.error(error);
@@ -56,12 +56,6 @@ const FormNewSchema = (props) => {
             aria-describedby='inputSchemaSubjectHelp'
             placeholder='Ex.: Mapped Requests'
           />
-          <small
-            id='inputSchemaSubjectHelp'
-            className='form-text text-muted'
-          >
-            Antes de criar o schema, verifique se ele está dentro do padrão de Taxonomia.
-          </small>
         </div>
         <div className='form-group' style={styles.bottomSpacing}>
           <label htmlFor='inputSchemaValue'>Insira o JSON-SCHEMA</label>
@@ -75,7 +69,7 @@ const FormNewSchema = (props) => {
             id='inputSchemaValueHelp'
             className='form-text text-muted'
           >
-            Aqui você coloca o JSON do schema.
+            Antes de criar, verifique se ele é um <a href='https://www.jsonschemavalidator.net/' target='_blank' rel='noreferrer'>JSON Schema</a> válido.
           </small>
         </div>
         <button

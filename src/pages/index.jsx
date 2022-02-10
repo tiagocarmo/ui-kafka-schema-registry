@@ -23,7 +23,7 @@ const Index = () => {
 
   const handleUpdateTopic = async () => {
     try {
-      const list = await axios.get('http://localhost:3000/api/kafka-list-topics');
+      const list = await axios.get('http://localhost:4000/api/kafka-list-topics');
       setTopics({
         list: list.data,
         count: list.data.length
@@ -37,7 +37,7 @@ const Index = () => {
 
   const handleUpdateSchema = async () => {
     try {
-      const list = await axios.get('http://localhost:3000/api/schema-registry-list');
+      const list = await axios.get('http://localhost:4000/api/schema-registry-list');
       setSchemas({
         list: list.data,
         count: list.data.length
@@ -84,7 +84,7 @@ const Index = () => {
         onCallbackShowSchema={handleShowSchema}
         onCallbackHideAll={handleHideAll}
       />
-      {reloadRequired && (
+      {reloadRequired && (!page.topics && !page.schema) && (
         <div className='container'>
           <div className='row'>
             <p>Hey! Verifique se o <strong>zookeeper</strong>, <strong>kafka</strong> e <strong>schema-registry</strong> estão rodando.</p>

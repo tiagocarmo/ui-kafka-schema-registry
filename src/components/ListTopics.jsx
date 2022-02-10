@@ -5,6 +5,14 @@ import IconSvgTrash from '../components/IconSvgTrash';
 const styles = {
   bottomSpacing: {
     paddingBottom: '80px'
+  },
+  listItem: {
+    width: '100%'
+  },
+  action: {
+    width: '110px',
+    marginLeft: '10px',
+    textAlign: 'right'
   }
 };
 
@@ -15,7 +23,7 @@ const ListTopics = (props) => {
     setLoading(true);
     try {
       await axios.post(
-        'http://localhost:3000/api/kafka-delete-topic',
+        'http://localhost:4000/api/kafka-delete-topic',
         {
           name: item
         }
@@ -36,16 +44,20 @@ const ListTopics = (props) => {
             <li
               key={key}
               className='list-group-item d-flex justify-content-between'
+              style={styles.listItem}
             >
               <span>{item}</span>
-              <button
-                type='button'
-                className='btn btn-danger'
-                onClick={() => deleteTopic(item)}
-                disabled={loading ? 'disabled' : ''}
-              >
-                <IconSvgTrash />
-              </button>
+              <div style={styles.action}>
+                <button
+                  type='button'
+                  className='btn btn-danger'
+                  onClick={() => deleteTopic(item)}
+                  disabled={loading ? 'disabled' : ''}
+                  style={{ float: 'right' }}
+                >
+                  <IconSvgTrash />
+                </button>
+              </div>
             </li>
           );
         })}

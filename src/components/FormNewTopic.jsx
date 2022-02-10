@@ -16,7 +16,7 @@ const FormNewTopic = (props) => {
     setLoading(true);
     try {
       await axios.post(
-        'http://localhost:3000/api/kafka-create-topic',
+        'http://localhost:4000/api/kafka-create-topic',
         {
           name: event.target.inputTopicName.value
         }
@@ -58,7 +58,7 @@ const FormNewTopic = (props) => {
             id='inputTopicNameHelp'
             className='form-text text-muted'
           >
-            Antes de criar o tópico, verifique se ele está dentro do padrão de Taxonomia.
+            Verifique se o tópico está dentro do padrão de Taxonomia.
           </small>
         </div>
         <button

@@ -24,6 +24,7 @@ const Header = (props) => {
               src='/schema-kafka.png'
               className='img-thumbnail'
               width='80'
+              alt='UI Kafka Schema Registry'
             />
             <span
               className='fs-5'
