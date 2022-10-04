@@ -46,7 +46,9 @@ sudo docker run -d --network kafka-net --hostname schema-registry --name schema-
 
 ### MongoDB com replicaset
 ```
-sudo docker run -d -p 27017:27017 -p 27020:27020 -p 27021:27021 --name mongo-rep -e "REPLICA_SET_NAME=mongo-rs" --restart=always minutrade/mongodb-replica-set:5.0
+sudo docker pull minutrade/mongodb-replica-set:5.0
+
+sudo docker run -d -p 27017:27017 -p 27020:27020 -p 27021:27021 --name mongo-rep -e "REPLICA_SET_NAME=mongo-rs" minutrade/mongodb-replica-set:5.0
 ```
 
 ### Redis
