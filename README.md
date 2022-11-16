@@ -48,17 +48,10 @@ sudo docker run -d --network kafka-net --hostname schema-registry --name schema-
 ```
 sudo docker pull minutrade/mongodb-replica-set:5.0
 
-sudo docker run -d -p 27017:27017 -p 27020:27020 -p 27021:27021 --name mongo-rep -e "REPLICA_SET_NAME=mongo-rs" minutrade/mongodb-replica-set:5.0
+sudo docker run -d -p 27017:27017 -p 27020:27020 -p 27021:27021 --name mongo -e "REPLICA_SET_NAME=mongo-rs" minutrade/mongodb-replica-set:5.0
 ```
 
 ### Redis
 ```
 sudo docker run -d --name redis6 -p 6379:6379 redis
-```
-
----
-
-## Kafkacat ############
-```
-sudo apt-get install kafkacat
 ```
